@@ -1,0 +1,14 @@
+{
+  "include": ["src/App.tsx", "src/components/**/*.{ts,tsx}"],
+  "exclude": [
+    "**/*.test.tsx",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/*.d.ts",
+    "**/store/**",
+    "**/utils/**",
+    "**/api/**",
+    "**/services/**"
+  ],
+  "reporter": ["text", "lcov"]
+}

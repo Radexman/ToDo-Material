@@ -6,6 +6,11 @@ import {
   Stack,
   Typography,
   TextField,
+  Container,
+  Paper,
+  Box,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import {
@@ -13,6 +18,44 @@ import {
   decrement,
   editMultiple,
 } from "./features/counter/counterSlice";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1976d2",
+    },
+    secondary: {
+      main: "#dc004e",
+    },
+  },
+  typography: {
+    h1: {
+      fontSize: "2.5rem",
+      fontWeight: 700,
+    },
+    h2: {
+      fontSize: "2rem",
+      fontWeight: 500,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
+          textTransform: "none",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          maxWidth: "200px",
+        },
+      },
+    },
+  },
+});
 
 const App = () => {
   const [inputValue, setInputValue] = useState(0);
@@ -37,30 +80,54 @@ const App = () => {
   };
 
   return (
-    <Stack gap={2}>
-      <Stack direction="column" gap={4}>
-        <Typography variant="h1">Demo Redux Counter</Typography>
-        <Typography variant="h2">{value}</Typography>
-      </Stack>
-      <ButtonGroup orientation="vertical">
-        <Button onClick={handleIncrement} color="secondary" variant="contained">
-          Increment
-        </Button>
-        <Button onClick={handleDecrement} color="secondary" variant="contained">
-          Decrement
-        </Button>
-      </ButtonGroup>
-      <Stack gap={2}>
-        <TextField
-          onChange={handleInputChange}
-          type="number"
-          label="Input a number"
-        />
-        <Button onClick={handleAddSubtractMultiple} variant="contained">
-          Add / Subtract
-        </Button>
-      </Stack>
-    </Stack>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="md">
+        <Paper elevation={3} sx={{ padding: 4, marginTop: 4 }}>
+          <Stack gap={4}>
+            <Box textAlign="center">
+              <Typography variant="h1" gutterBottom>
+                Demo Redux Counter
+              </Typography>
+              <Typography variant="h2" color="primary">
+                {value}
+              </Typography>
+            </Box>
+            <ButtonGroup fullWidth>
+              <Button
+                onClick={handleIncrement}
+                color="primary"
+                variant="contained"
+              >
+                Increment
+              </Button>
+              <Button
+                onClick={handleDecrement}
+                color="secondary"
+                variant="contained"
+              >
+                Decrement
+              </Button>
+            </ButtonGroup>
+            <Stack direction="row" gap={2} justifyContent="center">
+              <TextField
+                onChange={handleInputChange}
+                type="number"
+                label="Input a number"
+                variant="outlined"
+                size="small"
+              />
+              <Button
+                onClick={handleAddSubtractMultiple}
+                variant="contained"
+                color="primary"
+              >
+                Add / Subtract
+              </Button>
+            </Stack>
+          </Stack>
+        </Paper>
+      </Container>
+    </ThemeProvider>
   );
 };
 
