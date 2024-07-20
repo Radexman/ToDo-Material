@@ -8,7 +8,7 @@ describe("App component should", () => {
 
     const headingElement = screen.getByRole("heading", {
       level: 1,
-      name: /hello world/i,
+      name: /demo redux counter/i,
     });
 
     expect(headingElement).toBeInTheDocument();

@@ -19,8 +19,12 @@ export const counterSlice = createSlice({
     decrement: state => {
       state.value -= 1;
     },
+    editMultiple: (state, action: PayloadAction<number>) => {
+      state.value += action.payload;
+    },
   },
 });
 
-export const { increment, decrement } = counterSlice.actions;
+export const { increment, decrement, editMultiple } = counterSlice.actions;
+
 export default counterSlice.reducer;
