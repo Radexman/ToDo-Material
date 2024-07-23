@@ -1,31 +1,22 @@
 import type { ChangeEvent } from "react";
 import { useState } from "react";
-import {
-  Button,
-  ButtonGroup,
-  Stack,
-  Typography,
-  TextField,
-  Container,
-  Paper,
-  Box,
-  ThemeProvider,
-  createTheme,
-} from "@mui/material";
+import { Container, Paper, ThemeProvider, createTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import {
   increment,
   decrement,
   editMultiple,
 } from "./features/counter/counterSlice";
+import Heading from "./components/Heading/Heading";
+import Form from "./components/Form/Form";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2",
+      main: "#0AB6AB",
     },
     secondary: {
-      main: "#dc004e",
+      main: "#201F1F",
     },
   },
   typography: {
@@ -81,50 +72,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="md">
-        <Paper elevation={3} sx={{ padding: 4, marginTop: 4 }}>
-          <Stack gap={4}>
-            <Box textAlign="center">
-              <Typography variant="h1" gutterBottom>
-                Demo Redux Counter
-              </Typography>
-              <Typography variant="h2" color="primary">
-                {value}
-              </Typography>
-            </Box>
-            <ButtonGroup fullWidth>
-              <Button
-                onClick={handleIncrement}
-                color="primary"
-                variant="contained"
-              >
-                Increment
-              </Button>
-              <Button
-                onClick={handleDecrement}
-                color="secondary"
-                variant="contained"
-              >
-                Decrement
-              </Button>
-            </ButtonGroup>
-            <Stack direction="row" gap={2} justifyContent="center">
-              <TextField
-                onChange={handleInputChange}
-                type="number"
-                label="Input a number"
-                variant="outlined"
-                size="small"
-              />
-              <Button
-                onClick={handleAddSubtractMultiple}
-                variant="contained"
-                color="primary"
-              >
-                Add / Subtract
-              </Button>
-            </Stack>
-          </Stack>
+      <Container sx={{ padding: "4px" }}>
+        <Paper elevation={3} sx={{ borderRadius: "10px" }}>
+          <Heading />
+          <Form />
         </Paper>
       </Container>
     </ThemeProvider>
