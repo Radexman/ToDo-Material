@@ -1,15 +1,64 @@
+import type { ChangeEvent } from "react";
+import { useState } from "react";
 import { Stack, Typography, TextField, Button } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
+
+import type { Todo } from "../../types/appTypes.types";
+import { useAppDispatch } from "../../app/hooks";
+import { addTask } from "../../features/todo/todoSlice";
 
 const Form = () => {
+  const [taskNameValue, setTaskNameValue] = useState("");
+  const [taskDateValue, setTaskDateValue] = useState("");
+
+  const dispatch = useAppDispatch();
+
+  const handleTaskNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTaskNameValue(event.target.value);
+  };
+
+  const handleTaskDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTaskDateValue(event.target.value);
+  };
+
+  const handleTaskSubmit = () => {
+    const todo: Todo = {
+      name: taskNameValue,
+      date: taskDateValue,
+      isDone: false,
+      id: uuidv4(),
+    };
+
+    dispatch(addTask(todo));
+  };
+
   return (
     <Stack direction="column" gap={4} sx={{ padding: "8px" }}>
       <Typography alignSelf="center" variant="h2">
         Create Tasks For Today
       </Typography>
       <Stack direction="column" gap={2}>
-        <TextField label="Task Name" size="small" />
-        <TextField type="date" size="small" />
-        <Button variant="contained">Add Task</Button>
+        <TextField
+          value={taskNameValue}
+          onChange={handleTaskNameChange}
+          label="Task Name"
+          size="small"
+          data-testid="taskName"
+        />
+        <TextField
+          value={taskDateValue}
+          onChange={handleTaskDateChange}
+          type="date"
+          size="small"
+          data-testid="taskDate"
+        />
+        <Button
+          onClick={handleTaskSubmit}
+          variant="contained"
+          disabled={!taskNameValue || !taskDateValue}
+        >
+          Add Task
+        </Button>
       </Stack>
     </Stack>
   );
