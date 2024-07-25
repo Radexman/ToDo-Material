@@ -1,14 +1,7 @@
-import type { ChangeEvent } from "react";
-import { useState } from "react";
 import { Container, Paper, ThemeProvider, createTheme } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import {
-  increment,
-  decrement,
-  editMultiple,
-} from "./features/counter/counterSlice";
 import Heading from "./components/Heading/Heading";
 import Form from "./components/Form/Form";
+import TaskList from "./components/TaskList/TaskList";
 
 const theme = createTheme({
   palette: {
@@ -49,33 +42,13 @@ const theme = createTheme({
 });
 
 const App = () => {
-  const [inputValue, setInputValue] = useState(0);
-
-  const dispatch = useAppDispatch();
-  const value = useAppSelector(state => state.counter.value);
-
-  const handleIncrement = () => {
-    dispatch(increment());
-  };
-
-  const handleDecrement = () => {
-    dispatch(decrement());
-  };
-
-  const handleAddSubtractMultiple = () => {
-    dispatch(editMultiple(inputValue));
-  };
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(Number(event.target.value));
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Container sx={{ padding: "4px" }}>
         <Paper elevation={3} sx={{ borderRadius: "10px" }}>
           <Heading />
           <Form />
+          <TaskList />
         </Paper>
       </Container>
     </ThemeProvider>
