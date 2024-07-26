@@ -1,4 +1,5 @@
 import { screen } from "@testing-library/dom";
+
 import { renderWithProviders } from "../../utils/test-utils";
 import TaskList from "./TaskList";
 import type { Todo } from "../../types/appTypes.types";
@@ -15,7 +16,7 @@ describe("TaskList component should", () => {
     expect(headingElement).toBeInTheDocument();
   });
   test("render correct amount of todos", () => {
-    const initailState: Todo[] = [
+    const initialTodos: Todo[] = [
       {
         name: "Clean room",
         date: "25.07.2024",
@@ -42,10 +43,16 @@ describe("TaskList component should", () => {
       },
     ];
 
-    renderWithProviders(<TaskList />);
+    renderWithProviders(<TaskList />, {
+      preloadedState: {
+        todo: {
+          tasks: initialTodos,
+        },
+      },
+    });
 
     const todoElements = screen.getAllByTestId("todo");
-    expect(todoElements).toHaveLength(initailState.length);
+    expect(todoElements).toHaveLength(initialTodos.length);
   });
 
   test("not render ' No Tasks Yet' is there are items in the tasks array", () => {

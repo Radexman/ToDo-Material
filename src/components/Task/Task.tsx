@@ -56,14 +56,16 @@ const Task = ({ task }: TaskProps) => {
         </Typography>
         <IconButton
           onClick={() => handleCompleteClick(id)}
-          aria-label="finish-task"
+          aria-label="finish task"
+          data-testid="finishButton"
           size="small"
         >
           {isDone ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
         </IconButton>
         <IconButton
           onClick={() => handleDeleteClick(id)}
-          aria-label="delete-task"
+          aria-label="delete task"
+          data-testid="deleteButton"
           size="small"
         >
           <DeleteOutlineIcon />

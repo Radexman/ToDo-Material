@@ -14,10 +14,10 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "src/setupTests",
     mockReset: true,
-    include: ["src/components/**/*.test.tsx"],
+    include: ["src/components/**/*.test.tsx", "src/features/**/*.test.tsx"],
     coverage: {
       reporter: ["text", "lcov"],
-      include: ["src/components/**/*.{ts,tsx}"],
+      include: ["src/components/**/*.{ts,tsx}", "src/features/**/*.test.tsx"],
       exclude: [
         "**/*.test.tsx",
         "**/node_modules/**",
