@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { ChangeEvent } from "react";
 import { Stack, Typography, TextField, Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
@@ -10,6 +10,8 @@ import { addTask } from "../../features/todo/todoSlice";
 const Form = () => {
   const [taskNameValue, setTaskNameValue] = useState("");
   const [taskDateValue, setTaskDateValue] = useState("");
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
   const formatCurrentDate = () => {
     const date = new Date();
@@ -24,8 +26,15 @@ const Form = () => {
     return correctDateFormat;
   };
 
+  const focusOnInput = () => {
+    if (nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  };
+
   useEffect(() => {
     setTaskDateValue(formatCurrentDate());
+    focusOnInput();
   }, []);
 
   const dispatch = useAppDispatch();
@@ -48,6 +57,8 @@ const Form = () => {
     };
 
     dispatch(addTask(todo));
+    setTaskNameValue("");
+    focusOnInput();
   };
 
   return (
@@ -58,6 +69,7 @@ const Form = () => {
       <Stack direction="row" gap={2}>
         <TextField
           value={taskNameValue}
+          inputRef={nameInputRef}
           onChange={handleTaskNameChange}
           label="Task Name"
           placeholder="Task Name"

@@ -7,7 +7,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import type { ChangeEvent } from "react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   completeTask,
@@ -29,6 +29,9 @@ const Task = ({ task }: TaskProps) => {
 
   const [editedName, setEditedName] = useState(name);
   const [editedDate, setEditedDate] = useState(date);
+
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   const handleCompleteClick = (id: string) => {
     dispatch(completeTask(id));
@@ -60,6 +63,12 @@ const Task = ({ task }: TaskProps) => {
 
   const isEditing = taskBeingEdited?.id === id;
 
+  useEffect(() => {
+    if (isEditing && nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, [isEditing]);
+
   return (
     <Stack
       data-testid="todo"
@@ -76,6 +85,7 @@ const Task = ({ task }: TaskProps) => {
         <>
           <TextField
             value={editedName}
+            inputRef={nameInputRef}
             onChange={handleEditNameInput}
             size="small"
             sx={{ width: "40%" }}
@@ -83,6 +93,7 @@ const Task = ({ task }: TaskProps) => {
           <TextField
             type="date"
             value={editedDate}
+            inputRef={dateInputRef}
             onChange={handleEditDateInput}
             size="small"
             sx={{ width: "40%" }}

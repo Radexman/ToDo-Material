@@ -1,5 +1,6 @@
 import { Stack, Typography, Button } from "@mui/material";
 
+import nounCat from "../../assets/noun-cat.svg";
 import { useAppSelector } from "../../app/hooks";
 import { useAppDispatch } from "../../app/hooks";
 import {
@@ -59,9 +60,12 @@ const TaskList = () => {
       </Stack>
       <Stack direction="column" gap={1} padding={1}>
         {!tasks || tasks.length === 0 ? (
-          <Typography variant="h5" textAlign="center">
-            No Tasks
-          </Typography>
+          <Stack justifyContent="center" alignItems="center">
+            <Typography variant="h5" textAlign="center">
+              No Tasks
+            </Typography>
+            <img src={nounCat} alt="Lazy cat" style={{ width: "150px" }} />
+          </Stack>
         ) : (
           tasks.map(task => <Task key={task.id} task={task} />)
         )}
