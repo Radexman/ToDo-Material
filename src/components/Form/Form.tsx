@@ -42,6 +42,7 @@ const Form = () => {
           value={taskNameValue}
           onChange={handleTaskNameChange}
           label="Task Name"
+          placeholder="Task Name"
           size="small"
           data-testid="taskName"
         />
@@ -49,6 +50,7 @@ const Form = () => {
           value={taskDateValue}
           onChange={handleTaskDateChange}
           type="date"
+          placeholder="date"
           size="small"
           data-testid="taskDate"
         />

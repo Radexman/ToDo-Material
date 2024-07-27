@@ -1,18 +1,24 @@
 import { screen } from "@testing-library/dom";
 import { fireEvent } from "@testing-library/dom";
+import { beforeEach } from "vitest";
 
 import { renderWithProviders } from "../../utils/test-utils";
 import Task from "./Task";
 import type { Todo } from "../../types/appTypes.types";
 
+let task: Todo;
+
+beforeEach(() => {
+  task = {
+    name: "new task",
+    date: "25.07.2024",
+    isDone: false,
+    id: "1",
+  };
+});
+
 describe("Task component should", () => {
   test("render correctly", () => {
-    const task: Todo = {
-      name: "new task",
-      date: "25.07.2024",
-      isDone: false,
-      id: "1",
-    };
     renderWithProviders(<Task task={task} />);
 
     const taskNameElement = screen.getByRole("heading", {
@@ -28,16 +34,22 @@ describe("Task component should", () => {
   });
 
   test("call handleCompleteClick once on CheckBoxIcon button click", () => {
-    const task: Todo = {
-      name: "new task",
-      date: "25.07.2024",
-      isDone: false,
-      id: "1",
-    };
-
     renderWithProviders(<Task task={task} />);
 
     const finishButton = screen.getByTestId("finishButton");
-    fireEvent.click(finishButton);
+    expect(finishButton).toBeInTheDocument();
+    const taskNameElement = screen.getByRole("heading", {
+      level: 6,
+      name: /new task/i,
+    });
+
+    expect(taskNameElement).not.toHaveStyle("text-decoration: line-through");
+  });
+
+  test("call handleDeleteClick one on DeleteOutlineIcon button click", () => {
+    renderWithProviders(<Task task={task} />);
+
+    const deleteButton = screen.getByTestId("deleteButton");
+    fireEvent.click(deleteButton);
   });
 });

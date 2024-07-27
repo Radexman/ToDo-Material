@@ -1,11 +1,14 @@
 import { Stack, Typography, IconButton } from "@mui/material";
-import { useAppDispatch } from "../../app/hooks";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
 
-import type { Todo } from "../../types/appTypes.types";
+import { useAppDispatch } from "../../app/hooks";
 import { completeTask, deleteTask } from "../../features/todo/todoSlice";
+import type { Todo } from "../../types/appTypes.types";
 
 type TaskProps = {
   task: Todo;
@@ -19,6 +22,8 @@ const Task = ({ task }: TaskProps) => {
   const handleCompleteClick = (id: string) => {
     dispatch(completeTask(id));
   };
+
+  const handleEditClick = (task: Todo) => {};
 
   const handleDeleteClick = (id: string) => {
     dispatch(deleteTask(id));
@@ -61,6 +66,14 @@ const Task = ({ task }: TaskProps) => {
           size="small"
         >
           {isDone ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+        </IconButton>
+        <IconButton
+          onClick={() => handleEditClick(task)}
+          aria-label="update task"
+          data-testid="editButton"
+          size="small"
+        >
+          <EditIcon />
         </IconButton>
         <IconButton
           onClick={() => handleDeleteClick(id)}

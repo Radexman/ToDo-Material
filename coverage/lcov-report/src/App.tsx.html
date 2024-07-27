@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>64/69</span>
+                <span class='fraction'>58/58</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>64/69</span>
+                <span class='fraction'>58/58</span>
             </div>
         
             
@@ -121,18 +121,7 @@
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -180,17 +169,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -201,71 +179,60 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { ChangeEvent } from "react";
-import { useState } from "react";
-import {
-  Button,
-  ButtonGroup,
-  Stack,
-  Typography,
-  TextField,
-} from "@mui/material";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import {
-  increment,
-  decrement,
-  editMultiple,
-} from "./features/counter/counterSlice";
-import TestComponent from "./components/TestComponent/TestComponent";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Container, Paper, ThemeProvider, createTheme } from "@mui/material";
+import Heading from "./components/Heading/Heading";
+import Form from "./components/Form/Form";
+import TaskList from "./components/TaskList/TaskList";
+&nbsp;
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0AB6AB",
+    },
+    secondary: {
+      main: "#201F1F",
+    },
+  },
+  typography: {
+    h1: {
+      fontSize: "2.5rem",
+      fontWeight: 700,
+    },
+    h2: {
+      fontSize: "2rem",
+      fontWeight: 500,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "4px",
+          textTransform: "none",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          maxWidth: "200px",
+        },
+      },
+    },
+  },
+});
 &nbsp;
 const App = () =&gt; {
-  const [inputValue, setInputValue] = useState(0);
-&nbsp;
-  const dispatch = useAppDispatch();
-  const value = useAppSelector(state =&gt; state.counter.value);
-&nbsp;
-  const handleIncrement = () =&gt; {
-    dispatch(increment());
-  };
-&nbsp;
-  const handleDecrement = () =&gt; {
-    dispatch(decrement());
-  };
-&nbsp;
-  const handleAddSubtractMultiple = () =&gt; {
-    dispatch(editMultiple(inputValue));
-  };
-&nbsp;
-  const handleInputChange = (event: ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-    setInputValue(Number(event.target.value));
-  };
-&nbsp;
   return (
-    &lt;Stack gap={2}&gt;
-      &lt;Stack direction="column" gap={4}&gt;
-        &lt;Typography variant="h1"&gt;Demo Redux Counter&lt;/Typography&gt;
-        &lt;Typography variant="h2"&gt;{value}&lt;/Typography&gt;
-      &lt;/Stack&gt;
-      &lt;ButtonGroup orientation="vertical"&gt;
-        &lt;Button onClick={handleIncrement} color="secondary" variant="contained"&gt;
-          Increment
-        &lt;/Button&gt;
-        &lt;Button onClick={hand<span class="fstat-no" title="function not covered" >leDecrement} color="secondary" variant="contained"&gt;</span>
-          Decrement
-        &lt;/Button<span class="fstat-no" title="function not covered" >&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/ButtonGroup&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;Stack gap={2}&gt;</span>
-        &lt;TextField
-          onChange={handleInputCha<span class="fstat-no" title="function not covered" >nge}</span>
-<span class="cstat-no" title="statement not covered" >          type="number"</span>
-<span class="cstat-no" title="statement not covered" >          label="Input a number"</span>
-<span class="cstat-no" title="statement not covered" >        /&gt;</span>
-        &lt;Button onClick={handl<span class="fstat-no" title="function not covered" >eAddSubtractMultiple} variant="contained"&gt;</span>
-          Add / Subtract
-        &lt;/Button&gt;
-      &lt;/Stack&gt;
-      &lt;TestComponent /&gt;
-    &lt;/Stack&gt;
+    &lt;ThemeProvider theme={theme}&gt;
+      &lt;Container sx={{ padding: "4px" }}&gt;
+        &lt;Paper elevation={3} sx={{ borderRadius: "10px" }}&gt;
+          &lt;Heading /&gt;
+          &lt;Form /&gt;
+          &lt;TaskList /&gt;
+        &lt;/Paper&gt;
+      &lt;/Container&gt;
+    &lt;/ThemeProvider&gt;
   );
 };
 &nbsp;
@@ -277,7 +244,7 @@ export default App;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-20T16:54:13.059Z
+                at 2024-07-27T10:10:47.409Z
             </div>
         <script src="../prettify.js"></script>
         <script>
