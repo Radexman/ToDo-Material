@@ -28,7 +28,7 @@ describe("todoSlice should", () => {
     const unchangedTodo = state.tasks.find(task => task.id === "1");
 
     expect(unchangedTodo?.name).toBe("Clean room");
-    expect(unchangedTodo?.date).toBe("2024-07.25");
+    expect(unchangedTodo?.date).toBe("2024-07-25");
     expect(unchangedTodo?.isDone).toBeFalsy();
 
     store.dispatch(completeTask("1"));

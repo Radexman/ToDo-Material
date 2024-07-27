@@ -11,25 +11,25 @@ const initialState: TodoState = {
   tasks: [
     {
       name: "Clean room",
-      date: "2024-07.25",
+      date: "2024-07-25",
       isDone: false,
       id: "1",
     },
     {
       name: "Walk the dog",
-      date: "2024-07.25",
+      date: "2024-07-25",
       isDone: false,
       id: "2",
     },
     {
       name: "Read book",
-      date: "2024-07.25",
+      date: "2024-07-25",
       isDone: false,
       id: "3",
     },
     {
       name: "Workout",
-      date: "2024-07.25",
+      date: "2024-07-25",
       isDone: false,
       id: "4",
     },

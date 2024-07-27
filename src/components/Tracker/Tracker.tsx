@@ -14,7 +14,7 @@ const Tracker = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "dodgerblue",
+        background: "#0AB6AB",
         width: "20px",
         height: "20px",
         padding: "4px",
@@ -22,7 +22,7 @@ const Tracker = () => {
         borderRadius: "50%",
       }}
     >
-      <Typography fontWeight="bold">{Number(tasksLength)}</Typography>
+      <Typography>{Number(tasksLength)}</Typography>
     </Stack>
   );
 };

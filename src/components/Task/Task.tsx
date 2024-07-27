@@ -1,4 +1,4 @@
-import { Stack, Typography, IconButton } from "@mui/material";
+import { Stack, Typography, TextField, IconButton } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -6,8 +6,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-import { useAppDispatch } from "../../app/hooks";
-import { completeTask, deleteTask } from "../../features/todo/todoSlice";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  completeTask,
+  deleteTask,
+  startEditTask,
+  saveTask,
+  cancelEditTask,
+} from "../../features/todo/todoSlice";
 import type { Todo } from "../../types/appTypes.types";
 
 type TaskProps = {
@@ -16,18 +24,41 @@ type TaskProps = {
 
 const Task = ({ task }: TaskProps) => {
   const { name, date, isDone, id } = task;
-
   const dispatch = useAppDispatch();
+  const taskBeingEdited = useAppSelector(state => state.todo.taskBeingEdited);
+
+  const [editedName, setEditedName] = useState(name);
+  const [editedDate, setEditedDate] = useState(date);
 
   const handleCompleteClick = (id: string) => {
     dispatch(completeTask(id));
   };
 
-  const handleEditClick = (task: Todo) => {};
+  const handleEditClick = (id: string) => {
+    dispatch(startEditTask(id));
+  };
+
+  const handleSaveClick = () => {
+    dispatch(saveTask({ ...task, name: editedName, date: editedDate }));
+  };
+
+  const handleCancelClick = () => {
+    dispatch(cancelEditTask());
+  };
 
   const handleDeleteClick = (id: string) => {
     dispatch(deleteTask(id));
   };
+
+  const handleEditNameInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setEditedName(event.target.value);
+  };
+
+  const handleEditDateInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setEditedDate(event.target.value);
+  };
+
+  const isEditing = taskBeingEdited?.id === id;
 
   return (
     <Stack
@@ -37,53 +68,96 @@ const Task = ({ task }: TaskProps) => {
       alignItems="center"
       sx={{
         padding: "8px",
-        backgroundColor: "darkgray",
+        border: "1px solid darkgray",
         borderRadius: "5px",
       }}
     >
-      <Typography
-        variant="h6"
-        sx={{ textDecoration: isDone ? "line-through" : null }}
-      >
-        {name}
-      </Typography>
-      <Stack
-        gap={1}
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Typography
-          data-testid="data"
-          sx={{ fontWeight: 600, fontSize: "12px" }}
-        >
-          {date}
-        </Typography>
-        <IconButton
-          onClick={() => handleCompleteClick(id)}
-          aria-label="finish task"
-          data-testid="finishButton"
-          size="small"
-        >
-          {isDone ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-        </IconButton>
-        <IconButton
-          onClick={() => handleEditClick(task)}
-          aria-label="update task"
-          data-testid="editButton"
-          size="small"
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => handleDeleteClick(id)}
-          aria-label="delete task"
-          data-testid="deleteButton"
-          size="small"
-        >
-          <DeleteOutlineIcon />
-        </IconButton>
-      </Stack>
+      {isEditing ? (
+        <>
+          <TextField
+            value={editedName}
+            onChange={handleEditNameInput}
+            size="small"
+            sx={{ width: "40%" }}
+          />
+          <TextField
+            type="date"
+            value={editedDate}
+            onChange={handleEditDateInput}
+            size="small"
+            sx={{ width: "40%" }}
+          />
+          <Stack
+            gap={1}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <IconButton
+              onClick={handleSaveClick}
+              aria-label="save task"
+              data-testid="saveButton"
+              size="small"
+            >
+              <SaveIcon />
+            </IconButton>
+            <IconButton
+              onClick={handleCancelClick}
+              aria-label="cancel edit"
+              data-testid="cancelButton"
+              size="small"
+            >
+              <CancelIcon />
+            </IconButton>
+          </Stack>
+        </>
+      ) : (
+        <>
+          <Typography
+            variant="h6"
+            sx={{ textDecoration: isDone ? "line-through" : null }}
+          >
+            {name}
+          </Typography>
+          <Stack
+            gap={1}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography
+              data-testid="data"
+              sx={{ fontWeight: 600, fontSize: "12px" }}
+            >
+              {date}
+            </Typography>
+            <IconButton
+              onClick={() => handleCompleteClick(id)}
+              aria-label="finish task"
+              data-testid="finishButton"
+              size="small"
+            >
+              {isDone ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            </IconButton>
+            <IconButton
+              onClick={() => handleEditClick(id)}
+              aria-label="update task"
+              data-testid="editButton"
+              size="small"
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => handleDeleteClick(id)}
+              aria-label="delete task"
+              data-testid="deleteButton"
+              size="small"
+            >
+              <DeleteOutlineIcon />
+            </IconButton>
+          </Stack>
+        </>
+      )}
     </Stack>
   );
 };

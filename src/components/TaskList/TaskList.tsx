@@ -12,7 +12,6 @@ import Task from "../Task/Task";
 
 const TaskList = () => {
   const tasks = useAppSelector(state => state.todo.tasks);
-  const editMode = useAppSelector(state => state.todo.editMode);
   const dispatch = useAppDispatch();
   const currentDate = getCurrentDate();
 
@@ -36,7 +35,6 @@ const TaskList = () => {
           <Stack direction="row" gap={2} alignItems="center">
             <Typography variant="h2">Tasks For Today</Typography>
             <Tracker />
-            {editMode ? <p>Edit mode</p> : <p>No edit mode</p>}
           </Stack>
           <Stack direction="row" gap={1}>
             <Button
@@ -62,7 +60,7 @@ const TaskList = () => {
       <Stack direction="column" gap={1} padding={1}>
         {!tasks || tasks.length === 0 ? (
           <Typography variant="h5" textAlign="center">
-            No Tasks Yet
+            No Tasks
           </Typography>
         ) : (
           tasks.map(task => <Task key={task.id} task={task} />)
