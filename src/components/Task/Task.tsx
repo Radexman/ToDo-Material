@@ -33,12 +33,12 @@ const Task = ({ task }: TaskProps) => {
   const nameInputRef = useRef<HTMLInputElement>(null);
   const dateInputRef = useRef<HTMLInputElement>(null);
 
-  const handleCompleteClick = (id: string) => {
-    dispatch(completeTask(id));
+  const handleCompleteClick = (todo: Todo) => {
+    dispatch(completeTask(todo));
   };
 
-  const handleEditClick = (id: string) => {
-    dispatch(startEditTask(id));
+  const handleEditClick = (todo: Todo) => {
+    dispatch(startEditTask(todo));
   };
 
   const handleSaveClick = () => {
@@ -49,8 +49,8 @@ const Task = ({ task }: TaskProps) => {
     dispatch(cancelEditTask());
   };
 
-  const handleDeleteClick = (id: string) => {
-    dispatch(deleteTask(id));
+  const handleDeleteClick = (todo: Todo) => {
+    dispatch(deleteTask(todo));
   };
 
   const handleEditNameInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +143,7 @@ const Task = ({ task }: TaskProps) => {
               {date}
             </Typography>
             <IconButton
-              onClick={() => handleCompleteClick(id)}
+              onClick={() => handleCompleteClick(task)}
               aria-label="finish task"
               data-testid="finishButton"
               size="small"
@@ -151,7 +151,7 @@ const Task = ({ task }: TaskProps) => {
               {isDone ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
             </IconButton>
             <IconButton
-              onClick={() => handleEditClick(id)}
+              onClick={() => handleEditClick(task)}
               aria-label="update task"
               data-testid="editButton"
               size="small"
@@ -159,7 +159,7 @@ const Task = ({ task }: TaskProps) => {
               <EditIcon />
             </IconButton>
             <IconButton
-              onClick={() => handleDeleteClick(id)}
+              onClick={() => handleDeleteClick(task)}
               aria-label="delete task"
               data-testid="deleteButton"
               size="small"

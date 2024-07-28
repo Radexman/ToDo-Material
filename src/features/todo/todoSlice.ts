@@ -44,8 +44,11 @@ export const todoSlice = createSlice({
     addTask: (state, action: PayloadAction<Todo>) => {
       state.tasks.push(action.payload);
     },
-    startEditTask: (state, action: PayloadAction<string>) => {
-      const task = state.tasks.find(task => task.id === action.payload);
+    startEditTask: (state, action: PayloadAction<Todo>) => {
+      const {
+        payload: { id },
+      } = action;
+      const task = state.tasks.find(task => task.id === id);
       if (task) {
         state.taskBeingEdited = task;
       }
@@ -59,16 +62,20 @@ export const todoSlice = createSlice({
     cancelEditTask: state => {
       state.taskBeingEdited = null;
     },
-    completeTask: (state, action: PayloadAction<string>) => {
-      state.tasks.map(task =>
-        task.id === action.payload ? (task.isDone = true) : task,
-      );
+    completeTask: (state, action: PayloadAction<Todo>) => {
+      const {
+        payload: { id },
+      } = action;
+      state.tasks.map(task => (task.id === id ? (task.isDone = true) : task));
     },
     completeAllTasks: state => {
       state.tasks = state.tasks.map(task => ({ ...task, isDone: true }));
     },
-    deleteTask: (state, action: PayloadAction<string>) => {
-      state.tasks = state.tasks.filter(task => task.id !== action.payload);
+    deleteTask: (state, action: PayloadAction<Todo>) => {
+      const {
+        payload: { id },
+      } = action;
+      state.tasks = state.tasks.filter(task => task.id !== id);
     },
     deleteAllTasks: state => {
       state.tasks = [];

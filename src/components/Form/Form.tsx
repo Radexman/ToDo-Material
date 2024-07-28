@@ -45,7 +45,6 @@ const Form = () => {
 
   const handleTaskDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTaskDateValue(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleTaskSubmit = () => {
